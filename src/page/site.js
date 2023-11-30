@@ -1,5 +1,5 @@
 import '../css/App.css';
-import img1 from '../Frame.png'
+import Frame from '../img/Frame.png'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import city from '../data/data.json'
@@ -265,7 +265,7 @@ function Site() {
                 </div>
                 <div className="rightside">
                     <div className='imgbox'>
-                        <img src={img1} alt="LOGO"></img>
+                        <img src={Frame} alt="LOGO"></img>
                     </div>
                 </div>
             </section >
