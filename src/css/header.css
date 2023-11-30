@@ -1,0 +1,126 @@
+header {
+    position: fixed;
+    display: flex;
+    top: 0;
+    justify-content: space-between;
+    border-bottom: 1px #EBEBEB solid;
+    padding-inline: var(--inline);
+    align-items: center;
+    background-color: #FFFFFF;
+    z-index: 1000;
+    width: calc(100% - var(--inline)*2);
+}
+
+@media screen and (max-width:1000px) {
+    header {
+        padding-inline: var(--mobile-inline);
+        width: calc(100% - var(--mobile-inline)*2);
+    }
+}
+
+header .navstyle {
+    display: flex;
+}
+
+header .navstyle img {
+    width: 95px;
+    height: 95px;
+    margin: auto;
+    margin-right: 40px;
+}
+
+header .navstyle .nav {
+    display: flex;
+    justify-content: space-evenly;
+    /* width: 100%; */
+    align-items: center;
+}
+
+@media screen and (max-width:1000px) {
+
+    header .navstyle .nav,
+    header .login {
+        display: none;
+    }
+}
+
+.NavLink {
+    color: var(--Twocolor);
+    margin-inline: 20px;
+    font-size: var(--tagfont-size);
+    text-decoration: none;
+}
+
+@media screen and (max-width:1000px) {
+    .NavLink {
+        margin-inline: 32px;
+        color: #FFFFFF;
+    }
+}
+
+.NavLink.active {
+    color: var(--Onecolor);
+}
+
+@media screen and (max-width:1000px) {
+    .NavLink.active {
+        color: var(--Twocolor);
+    }
+}
+
+header .login {
+    background-color: var(--Twocolor);
+    width: 85px;
+    height: 40px;
+    border: 0;
+    border-radius: 100px;
+    font-size: var(--tagfont-size);
+    color: #FFFFFF;
+}
+
+header .moible-login {
+    display: none;
+}
+
+@media screen and (max-width:1000px) {
+
+    header .moible-login {
+        display: block;
+        color: var(--Onecolor);
+        width: 24px;
+        height: 24px;
+    }
+}
+
+header .menu {
+    position: fixed;
+    top: 96px;
+    background-color: var(--Onecolor);
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+}
+
+header .menu-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 150px;
+    height: calc(100% - 64px);
+    padding-block: 32px;
+}
+
+header .menu-nav nav {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+
+header .menu-nav button {
+    margin-left: 32px;
+    color: var(--Onecolor);
+    background: #FFFFFF;
+
+}

@@ -1,0 +1,244 @@
+.site {
+  padding-top: 104px;
+}
+
+.section {
+  display: flex;
+  /* max-width: 100%; */
+  /* justify-content: space-between; */
+  padding-inline: var(--inline);
+}
+
+@media screen and (max-width:1000px) {
+  .section {
+    padding-inline: var(--mobile-inline);
+  }
+}
+
+.section .liftside {
+  max-width: 50%;
+  width: 100%;
+  padding-right: 10%;
+}
+
+@media screen and (max-width:1000px) {
+  .section .liftside {
+    max-width: 100%;
+    padding-right: 0;
+  }
+}
+
+.section .title {
+  color: var(--Onecolor);
+}
+
+.section .search {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 32px;
+  min-width: 120px;
+}
+
+@media screen and (max-width:1000px) {
+  .section .search {
+    flex-direction: column;
+    margin-top: 16px;
+    gap: 8px;
+  }
+}
+
+/* 初始input list應用設定 */
+.search .area-search {
+  display: flex;
+  width: 100%;
+  max-width: 140px;
+  margin-right: 8px;
+}
+
+@media screen and (max-width:1000px) {
+  .search .area-search {
+    max-width: 100%;
+    /* padding: 0 -50px 0 0; */
+  }
+}
+
+.search .sna-search {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+}
+
+@media screen and (max-width:1000px) {
+  .search .sna-search {
+    max-width: 100%;
+  }
+}
+
+
+
+/* checkbox */
+.liftside .allcheck {
+  margin-top: 24px;
+  font-size: var(--tagfont-size);
+  max-width: 800px;
+  min-height: 200px;
+}
+
+.liftside .allcheck .allcheck-box {
+  display: flex;
+  gap: 16px;
+}
+
+.liftside .allcheck .allcheck-box button {
+  padding-block: 0;
+}
+
+
+.liftside .checkboxs {
+  display: flex;
+  margin-top: 15px;
+  flex-direction: column;
+  width: 100%;
+}
+
+.liftside .checkboxstyle {
+  list-style: none;
+  font-size: var(--tagfont-size);
+  display: flex;
+  max-width: 800px;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+/* checkbox show-box */
+.liftside .allcheck label {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.liftside .allcheck input {
+  display: none;
+}
+
+.liftside .allcheck span {
+  padding-left: 25px;
+}
+
+.liftside .allcheck input:checked+span+.show-box {
+  background: var(--Onecolor);
+  border: 2px solid var(--Onecolor);
+}
+
+.liftside .allcheck .show-box {
+  position: absolute;
+  top: 5px;
+  left: 2px;
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  border: 2px solid #AEAEAE;
+  background: white;
+}
+
+.liftside .allcheck .show-box:before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 3px;
+  width: 3px;
+  height: 8px;
+  border: solid #FFFFFF;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/*rightside*/
+.rightside {
+  width: 120%;
+  display: flex;
+  align-items: end;
+  justify-self: center;
+}
+
+@media screen and (max-width:1000px) {
+  .rightside {
+    display: none;
+  }
+}
+
+.rightside .imgbox {
+  max-width: 500px;
+}
+
+.rightside .imgbox img {
+  width: 100%;
+}
+
+/* table */
+.table-box {
+  border: #AEAEAE solid 1px;
+  border-radius: 28px;
+  overflow: hidden;
+  margin: 16px 0 20px 0;
+  width: 100%;
+}
+
+@media screen and (max-width:1000px) {
+  .table-box {
+    overflow: auto;
+    white-space: nowrap;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+@media screen and (max-width:1000px) {
+  .table {
+    min-width: 700px;
+  }
+}
+
+.table th,
+.table td {
+  width: 15%;
+}
+
+.table .td-10 {
+  width: 10%;
+}
+
+.table .td-25 {
+  width: 25%;
+}
+
+.table .thead {
+  background-color: var(--Onecolor);
+  color: #FFFFFF;
+  font-size: var(--tagfont-size);
+  height: 66px;
+}
+
+.table tr {
+  font-size: var(--tablefont-size);
+  height: 72px;
+  text-align: center;
+}
+
+.table tr:nth-of-type(even) {
+  background: var(--Threecolor);
+}
+
+.table .font-lift {
+  text-align: start;
+  padding-left: 8%;
+}
+
+.table .green {
+  color: var(--Onecolor);
+  font-size: var(--tablenum-size);
+}
