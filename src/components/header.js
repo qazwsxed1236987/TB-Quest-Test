@@ -1,4 +1,4 @@
-import Logo from '../logo_180x180 1.png'
+import Logo from '../img/logo_180x180 1.png'
 import '../css/header.css'
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';

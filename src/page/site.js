@@ -1,5 +1,5 @@
 import '../css/App.css';
-import img1 from '../Frame.png'
+import Frame from '../img/Frame.png'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import city from '../data/data.json'
@@ -87,28 +87,25 @@ function Site() {
         let newdata = data
         // check change filter
         if (nowcheck.length > 0) {
-            // console.log('nowcheck;', nowcheck);
-
             newdata = newdata.filter(obj =>
                 nowcheck.some(v => v.name === obj.sarea && v.check)
             )
-            // console.log('newdata:', newdata);
         }
         // check area use
         if (!optionselect) {
             if (searchselect) {
                 newdata = newdata.filter(obj => searchselect.some(v => obj.sna.includes(v)));
-                // setNowData(newdata)
             }
         } else {
+            // 這裡要篩選city
+            newdata = newdata.filter(obj => obj.city === optionselect)
             if (searchselect) {
                 newdata = newdata.filter(obj => searchselect.some(v => obj.sna.includes(v)))
-                // setNowData(newdata)
             }
         }
         setNowData(newdata)
-
     }, [searchselect, searchtext, nowcheck])
+
     // getdata ok
     const getData = () => {
         const url = 'https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json'
@@ -265,7 +262,7 @@ function Site() {
                 </div>
                 <div className="rightside">
                     <div className='imgbox'>
-                        <img src={img1} alt="LOGO"></img>
+                        <img src={Frame} alt="LOGO"></img>
                     </div>
                 </div>
             </section >
