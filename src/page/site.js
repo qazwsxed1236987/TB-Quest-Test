@@ -1,4 +1,4 @@
-import '../css/App.css';
+import '../css/site.css';
 import Frame from '../img/Frame.png'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -12,10 +12,8 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 function Site() {
     //data
     const [data, setData] = useState([])
-    //fliter one data
-    const [fliterdata, setFliterData] = useState([])
-    //fliter two data
-    const [nowdata, setNowData] = useState([])
+    //fliter data
+    const [nowData, setNowData] = useState([])
     // option list
     const [option, setOption] = useState([])
     // option text
@@ -32,26 +30,27 @@ function Site() {
     const [searchselect, setSearchSelect] = useState('')
     //checkbox check obj
     const [check, setCheck] = useState([{}])
-    //checkBoxList 篩選過後
+    //checkBoxList filter
     const [nowcheck, setNowCheck] = useState([{}])
     //allCheck
     const [all, setAll] = useState({ name: 'all', check: true })
     //checkSize
-    const [areasize, setAreaSize] = useState(4); // 初始值為1，你可以根據需要設置初始值
-    // console.log(nowcheck);
-    //初始取得資料
+    const [areasize, setAreaSize] = useState(4);
+
+
+
     useEffect(() => {
         getData()
-        /*resize use*/
+        //resize use
         const handleResize = () => {
-            const screenWidth = window.innerWidth;
-            if (screenWidth > 1150) {
+            const screenW = window.innerWidth;
+            if (screenW > 1150) {
                 setAreaSize(4);
             } else {
-                if (screenWidth > 1000) {
+                if (screenW > 1000) {
                     setAreaSize(3);
                 } else {
-                    if (screenWidth > 500) {
+                    if (screenW > 500) {
                         setAreaSize(4);
                     } else {
                         setAreaSize(3);
@@ -77,11 +76,10 @@ function Site() {
         setSnaOption(filterSna)
         setSearchText('')
         setSearchSelect('')
-        setFliterData(newdata)
         setNowData(newdata)
-        setNowCheck(checkobj(newcheck))
-        setAll({ ...all, check: true })
-    }, [optionselect, optiontext, data])
+        setNowCheck(checkList(newcheck))
+        setAll(obj => ({ ...obj, check: true }))
+    }, [optionselect, optiontext, data, snaAllOption, check])
 
     useEffect(() => {
         let newdata = data
@@ -97,16 +95,15 @@ function Site() {
                 newdata = newdata.filter(obj => searchselect.some(v => obj.sna.includes(v)));
             }
         } else {
-            // 這裡要篩選city
+            // filter city
             newdata = newdata.filter(obj => obj.city === optionselect)
             if (searchselect) {
                 newdata = newdata.filter(obj => searchselect.some(v => obj.sna.includes(v)))
             }
         }
         setNowData(newdata)
-    }, [searchselect, searchtext, nowcheck])
+    }, [data, nowcheck, optionselect, searchselect, snaAllOption, searchtext, all])
 
-    // getdata ok
     const getData = () => {
         const url = 'https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json'
         axios.get(url)
@@ -115,28 +112,24 @@ function Site() {
                     obj.sna = obj.sna.substring(11)
                     obj.city = "台北市"
                 });
-                const area = [{ "name": "台北市", "city": [...new Set(res.data.map(v => v.sarea))] },
-                {
-                    "name": "新北市", "city": ["板橋區", "新莊區", "中和區", "永和區"]
-                }];
+                const area =
+                    [{ "name": "台北市", "city": [...new Set(res.data.map(v => v.sarea))] },
+                    { "name": "新北市", "city": ["板橋區", "新莊區", "中和區", "永和區"] }];
                 const snalist = res.data.map(v => v.sna)
                 setData(res.data)
                 setOption(city.data)
                 setSnaAllOption(snalist)
                 setSnaOption(snalist)
                 setCheck(area)
-                setNowCheck(checkobj(area[0].city))
-
             })
             .catch((err) => { console.log(err) })
     }
     //option set fun
-    const handleOption = (value, setFun) => {
-        setFun(value)
+    const handleOption = (v, setFun) => {
+        setFun(v)
     }
     //change checkbox
     const togglecheck = (checkbox) => {
-        // console.log(nowcheck);
         if (checkbox.name === 'all') {
             setAll({ ...checkbox, check: !checkbox.check })
             if (!checkbox.check) {
@@ -149,7 +142,6 @@ function Site() {
                 area.name === checkbox.name ? { ...area, check: !area.check } : area
             )
             setNowCheck(checked)
-            // if nowcheck 全部為true all 打勾 反之 不勾
             if (checked.every(area => area.check === true)) {
                 setAll({ ...all, check: true })
             } else {
@@ -167,21 +159,21 @@ function Site() {
         setSearchText('')
         setOptionSelect('')
     }
-    //check reset
-    const checkobj = (area) => {
-        const checkobj = []
+    //checkList reset
+    const checkList = (area) => {
+        const checkLis = []
         if (area) {
             for (let i = 0; i < area.city.length; i++) {
                 const obj = {
                     name: area.city[i],
                     check: true
                 };
-                checkobj.push(obj)
+                checkLis.push(obj)
             }
         }
-        return checkobj
+        return checkLis
     }
-    //checkbox list use-------------------------
+    //checkbox list use
     const areaList = [];
     for (let i = 0; i < nowcheck.length; i += areasize) {
         areaList.push(nowcheck.slice(i, i + areasize));
@@ -192,25 +184,23 @@ function Site() {
                 <div className="liftside">
                     <h1 className='title'>站點資訊</h1>
                     <div className="search">
-                        { /*縣市選擇 color用色碼*/}
                         <Select
                             option={option}
                             text={optiontext}
-                            handleFun={handleOption}
-                            placeholder={'選擇縣市'}
-                            setFun={setOptionText}
+                            handleOption={handleOption}
+                            placeHolder={'選擇縣市'}
+                            setText={setOptionText}
                             selected={setOptionSelect}
-                            state={{ name: 'area', color: '#323232', icon: faSortDown }}
+                            OtherStyle={{ name: 'area', color: '#323232', icon: faSortDown }}
                         />
-                        {/* 站點選擇 */}
                         <Select
                             option={snaOption}
                             text={searchtext}
-                            handleFun={handleOption}
-                            placeholder={'選擇站點'}
-                            setFun={setSearchText}
+                            handleOption={handleOption}
+                            placeHolder={'選擇站點'}
+                            setText={setSearchText}
                             selected={setSearchSelect}
-                            state={{ name: 'sna', color: '#B5CC22', icon: faMagnifyingGlass }}
+                            OtherStyle={{ name: 'sna', color: '#B5CC22', icon: faMagnifyingGlass }}
                         />
                     </div>
                     <div className="allcheck">
@@ -226,13 +216,11 @@ function Site() {
                                 <span>全部勾選</span>
                                 <div className="show-box"></div>
                             </label>
-
                             <button onClick={() => {
                                 handleclear()
                             }}>清除
                             </button>
                         </div>
-
                         <div className='checkboxs'>
                             {/* checkbox list*/}
                             {areaList.map((v, i) => {
@@ -279,7 +267,7 @@ function Site() {
                             </tr>
                         </thead>
                         <tbody className="tbody">
-                            {nowdata.map((v, i) => {
+                            {nowData.map((v, i) => {
                                 return (
                                     <tr key={i}>
                                         <td className='td-10'>{v.city}</td>

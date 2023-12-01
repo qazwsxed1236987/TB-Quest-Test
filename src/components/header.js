@@ -1,46 +1,52 @@
-import Logo from '../img/logo_180x180 1.png'
 import '../css/header.css'
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-
-
+import Logo from '../img/logo_180x180 1.png'
 
 function Header() {
 
+    const [menuOpen, setMenuOpen] = useState(false);
 
-    const [isMenuOpen, setMenuOpen] = useState(false);
-
-    // 加入螢幕尺寸判定 >1000  isMenuOpen false
+    useEffect(() => {
+        /*resize use*/
+        const handleResize = () => {
+            const screenW = window.innerWidth;
+            if (screenW > 1150) {
+                setMenuOpen(false)
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        handleResize();
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [])
 
     const toggleMenu = () => {
-        setMenuOpen(!isMenuOpen);
+        setMenuOpen(!menuOpen);
     };
-
-
-
     const list = [
         { 'title': '使用說明', 'url': '/howtouse' },
         { 'title': '收費方式', 'url': '/fee-methods' },
         { 'title': '站點資訊', 'url': '/' },
         { 'title': '最新消息', 'url': '/new-message' },
         { 'title': '活動專區', 'url': '/activity' },]
+
     const [navlist, setNavList] = useState(list)
     return (
         <>
             <header>
                 <section className='navstyle'>
-                    <img src={Logo}></img>
+                    <img src={Logo} alt='Logo'></img>
                     <nav className='nav'>
                         {navlist.map((nav) => {
                             return (
-                                <>
-                                    <NavLink className="NavLink" to={nav.url} key={nav.title}>
-                                        {nav.title}
-                                    </NavLink>
-                                </>
+                                <NavLink className="NavLink" to={nav.url} key={nav.title}>
+                                    {nav.title}
+                                </NavLink>
                             )
                         })
                         }
@@ -49,39 +55,27 @@ function Header() {
 
                 <button className='login'>登入</button>
                 <FontAwesomeIcon
-                    icon={isMenuOpen ? faXmark : faBars}
+                    icon={menuOpen ? faXmark : faBars}
                     className='moible-login'
                     onClick={toggleMenu}
                 />
-
-
-
-                {isMenuOpen && (
+                {menuOpen && (
                     <div className='menu'>
-
-                        {/* 需要往右移+pad or mar */}
                         <div className='menu-nav'>
-                            {/* 上方區塊 mar top down 32*/}
-                            <nav>
-                                {/* gap 32 */}
+                            <nav className='nav'>
                                 {navlist.map((nav) => {
                                     return (
-                                        <>
-                                            <NavLink className="NavLink" to={nav.url} key={nav.title}>
-                                                {nav.title}
-                                            </NavLink>
-                                        </>
+                                        <NavLink className="NavLink" to={nav.url} key={`${nav.title}.mobile`}>
+                                            {nav.title}
+                                        </NavLink>
                                     )
-                                })
-                                }
+                                })}
                             </nav>
-                            {/* 下方 */}
                             <button>登入</button>
                         </div>
                     </div>
                 )}
             </header >
-
         </>
     );
 }

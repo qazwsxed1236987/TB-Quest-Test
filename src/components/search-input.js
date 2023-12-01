@@ -5,15 +5,18 @@ import '../css/search-icon.css'
 
 
 
-function SearchInput({ option, text, handleFun, placeholder, setFun, selected, state }) {
+function SearchInput({
+    option,
+    text,
+    handleOption,
+    placeHolder,
+    setText,
+    selected,
+    OtherStyle = { name: 'sna', color: '#FFFFFF', icon: 'faMagnifyingGlass' } }) {
 
     // select custom
     const options = option.map((v) => ({ label: v, value: v }));
-    const selectstyles = {
-        container: provided => ({
-            ...provided,
-            // width: '100%'
-        }),
+    const selectStyles = {
         control: (provided) => ({
             ...provided,
             height: '40px',
@@ -29,7 +32,7 @@ function SearchInput({ option, text, handleFun, placeholder, setFun, selected, s
         }),
         option: (provided, option) => ({
             ...provided,
-            color: option.isSelected ? state.color : 'normal',
+            color: option.isSelected ? OtherStyle.color : 'normal',
             background: 'var(--Threecolor)',
             fontWeight: option.isSelected ? '600' : 'normal'
         }),
@@ -54,18 +57,17 @@ function SearchInput({ option, text, handleFun, placeholder, setFun, selected, s
         }),
         singleValue: provided => ({
             ...provided,
-            color: state.color
+            color: OtherStyle.color
         }),
         container: provided => ({
             ...provided,
             width: "100%"
         }),
-
     };
 
     return (
         <>
-            <div className={`${state.name}-search`}>
+            <div className={`${OtherStyle.name}-search`}>
                 <Select
                     // 修正過的表單(縣市)
                     options={options}
@@ -73,23 +75,23 @@ function SearchInput({ option, text, handleFun, placeholder, setFun, selected, s
                     value={text ? options.find((opt) => opt.value === text) : ''}
                     // 這裡為選定的時後產生
                     onChange={(e) => {
-                        if (state.name === 'area') {
-                            handleFun(e.value, setFun);
-                            handleFun(e.value, selected);
+                        if (OtherStyle.name === 'area') {
+                            handleOption(e.value, setText);
+                            handleOption(e.value, selected);
                         } else {
                             const value = [e.value]
-                            handleFun(value, setFun);
-                            handleFun(value, selected);
+                            handleOption(value, setText);
+                            handleOption(value, selected);
                         }
                     }}
-                    styles={selectstyles}
-                    placeholder={placeholder}
+                    styles={selectStyles}
+                    placeholder={placeHolder}
                     onInputChange={(value) => {
                         if (value) {
                             const oneOption = options.filter((opt) =>
                                 opt.label.includes(value)
                             );
-                            if (state.name === 'area') {
+                            if (OtherStyle.name === 'area') {
                                 if (oneOption[0]) {
                                     selected(oneOption[0].value);
                                 }
@@ -103,8 +105,8 @@ function SearchInput({ option, text, handleFun, placeholder, setFun, selected, s
                         }
                     }}
                 />
-                <FontAwesomeIcon icon={state.icon}
-                    className={state.name === "area" ? text ? 'icon icon-checked-black' : 'icon icon-default-color'
+                <FontAwesomeIcon icon={OtherStyle.icon}
+                    className={OtherStyle.name === "area" ? text ? 'icon icon-checked-black' : 'icon icon-default-color'
                         : text ? 'icon icon-checked-green' : 'icon icon-default-color'}
                 />
             </div>

@@ -68,6 +68,11 @@ header .navstyle .nav {
     }
 }
 
+header .login,
+header .moible-login {
+    cursor: pointer;
+}
+
 header .login {
     background-color: var(--Twocolor);
     width: 85px;
